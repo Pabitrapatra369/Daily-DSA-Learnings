@@ -1,0 +1,63 @@
+class Solution {
+    public void setZeroes(int[][] matrix) {
+         for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[i].length;j++){
+                if(matrix[i][j]==0){
+                     for(int k=0;k<matrix[i].length;k++){
+                        if(matrix[i][k]!=0)
+                        matrix[i][k]=Integer.MIN_VALUE-5;
+                    }
+                    for(int k=0;k<matrix.length;k++){
+                        if(matrix[k][j]!=0)
+                        matrix[k][j]=Integer.MIN_VALUE-5;
+                    }
+                }
+            }
+        }
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[i].length;j++){
+                if(matrix[i][j]==Integer.MIN_VALUE-5){
+                   matrix[i][j]=0;
+                }
+            }
+        }
+    }
+}
+//Optimal
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        boolean firstCell = false;
+
+        for(int r = 0; r < rows; r++){
+            for(int c = 0; c < cols; c++){
+                if(matrix[r][c] == 0){
+                    matrix[0][c] = 0;
+                    if(r > 0){
+                        matrix[r][0] = 0;
+                    }else{
+                        firstCell = true;
+                    }
+                }
+            }
+        }
+        for(int r = 1; r < rows; r++){
+            for(int c = 1; c < cols; c++){
+                if(matrix[0][c] == 0 || matrix[r][0] == 0){
+                    matrix[r][c]=0;               }
+            }
+        }
+
+        if(matrix[0][0] == 0){
+            for(int r=0; r<rows;r++){
+                matrix[r][0] = 0;
+            }
+        }
+        if(firstCell){
+            for(int c=0; c<cols;c++){
+                matrix[0][c] = 0;
+            }
+        }
+    }
+}
